@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"ai-doctor-backend/internal/dto"
 	"ai-doctor-backend/internal/service"
 
 	"github.com/gin-gonic/gin"
@@ -17,10 +18,9 @@ func NewAnalyzeHandler() *AnalyzeHandler {
 }
 
 func (h *AnalyzeHandler) Analyze(c *gin.Context) {
-	var input struct {
-		Data string `json:"data"`
-	}
+	// 获取请求体数据
+	var input dto.AnalyzePayload
 	c.ShouldBindJSON(&input)
-	result := h.service.AnalyzeData(input.Data) // 调用业务层
-	c.JSON(200, gin.H{"result": result})
+	h.service.AnalyzeData(input) // 调用业务层
+	c.JSON(200, gin.H{"message": "analysis started"})
 }
