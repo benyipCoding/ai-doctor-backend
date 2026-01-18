@@ -23,6 +23,7 @@ func InitPostgres() *gorm.DB {
 
 	// 自动迁移数据库模式
 	db.AutoMigrate(&model.Todo{})
+	db.AutoMigrate(&model.LLM{})
 
 	return db
 }
