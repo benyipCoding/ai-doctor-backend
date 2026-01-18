@@ -28,7 +28,6 @@ func main() {
 	db = database.InitPostgres()
 
 	// 3. 使用配置初始化 Redis
-
 	rdb = database.InitRedis(ctx)
 
 	// 4. 启动 Gin 服务器
