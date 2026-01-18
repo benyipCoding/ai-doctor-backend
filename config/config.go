@@ -11,6 +11,7 @@ type Config struct {
 	Server   ServerConfig   `mapstructure:"server"`
 	Database DatabaseConfig `mapstructure:"database"`
 	Redis    RedisConfig    `mapstructure:"redis"`
+	AI       AIConfig       `mapstructure:"ai_service"`
 }
 
 type ServerConfig struct {
@@ -33,6 +34,11 @@ type RedisConfig struct {
 	DB       int    `mapstructure:"db"`
 }
 
+type AIConfig struct {
+	APIKey string `mapstructure:"apikey"`
+}
+
+// GlobalConfig 是全局配置变量
 var GlobalConfig Config
 
 func InitConfig() {
