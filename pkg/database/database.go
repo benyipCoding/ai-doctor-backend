@@ -11,7 +11,12 @@ import (
 	"gorm.io/gorm"
 )
 
-func InitPostgres() *gorm.DB {
+var (
+	db  *gorm.DB
+	rdb *redis.Client
+)
+
+func InitPostgres() {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable",
 		config.GlobalConfig.Database.Host,
 		config.GlobalConfig.Database.User,
@@ -19,18 +24,17 @@ func InitPostgres() *gorm.DB {
 		config.GlobalConfig.Database.Dbname,
 		config.GlobalConfig.Database.Port,
 	)
-	db, _ := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, _ = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	// 自动迁移数据库模式
 	db.AutoMigrate(&model.Todo{})
 	db.AutoMigrate(&model.LLM{})
 
-	return db
 }
 
-func InitRedis(ctx context.Context) *redis.Client {
+func InitRedis(ctx context.Context) {
 	// Redis 初始化逻辑（如果需要）
-	rdb := redis.NewClient(&redis.Options{
+	rdb = redis.NewClient(&redis.Options{
 		Addr:     config.GlobalConfig.Redis.Addr,
 		Password: config.GlobalConfig.Redis.Password,
 		DB:       config.GlobalConfig.Redis.DB,
@@ -42,5 +46,4 @@ func InitRedis(ctx context.Context) *redis.Client {
 		panic(fmt.Errorf("连接 Redis 失败: %w", err))
 	}
 
-	return rdb
 }

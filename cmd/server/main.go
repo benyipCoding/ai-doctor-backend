@@ -8,13 +8,6 @@ import (
 	"ai-doctor-backend/pkg/database"
 
 	"github.com/gin-gonic/gin"
-	"github.com/redis/go-redis/v9"
-	"gorm.io/gorm"
-)
-
-var (
-	db  *gorm.DB
-	rdb *redis.Client
 )
 
 func main() {
@@ -26,10 +19,10 @@ func main() {
 	config.InitConfig()
 
 	// 2. 使用配置初始化数据库
-	db = database.InitPostgres()
+	database.InitPostgres()
 
 	// 3. 使用配置初始化 Redis
-	rdb = database.InitRedis(ctx)
+	database.InitRedis(ctx)
 
 	// 4. 启动 Gin 服务器
 	r := gin.Default()
