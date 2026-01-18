@@ -14,10 +14,13 @@ import (
 var (
 	db  *gorm.DB
 	rdb *redis.Client
-	ctx = context.Background()
 )
 
 func main() {
+	// 创建可取消的根 Context
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
 	// 1. 加载配置
 	config.InitConfig()
 
@@ -25,6 +28,7 @@ func main() {
 	db = database.InitPostgres()
 
 	// 3. 使用配置初始化 Redis
+
 	rdb = database.InitRedis(ctx)
 
 	// 4. 启动 Gin 服务器
