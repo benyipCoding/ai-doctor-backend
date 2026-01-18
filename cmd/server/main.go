@@ -35,9 +35,12 @@ func main() {
 	r := gin.Default()
 
 	health := handler.NewHealthHandler()
+	analyze := handler.NewAnalyzeHandler()
 
+	// 注册路由
 	api := r.Group("/api_v1")
 	api.GET("/ping", health.Ping)
+	api.POST("/analyzeImage", analyze.Analyze)
 
 	r.Run(":8080")
 }
