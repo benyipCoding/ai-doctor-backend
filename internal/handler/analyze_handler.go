@@ -19,8 +19,11 @@ func NewAnalyzeHandler() *AnalyzeHandler {
 
 func (h *AnalyzeHandler) Analyze(c *gin.Context) {
 	// 获取请求体数据
-	var input dto.AnalyzePayload
-	c.ShouldBindJSON(&input)
-	h.service.AnalyzeData(input) // 调用业务层
+	var payload dto.AnalyzePayload
+	if err := c.ShouldBindJSON(&payload); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	h.service.AnalyzeData(payload) // 调用业务层
 	c.JSON(200, gin.H{"message": "analysis started"})
 }

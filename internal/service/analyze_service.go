@@ -3,7 +3,6 @@ package service
 import (
 	"ai-doctor-backend/config"
 	"ai-doctor-backend/internal/dto"
-	"fmt"
 )
 
 type AnalyzeService struct {
@@ -21,5 +20,4 @@ func (s *AnalyzeService) AnalyzeData(payload dto.AnalyzePayload) {
 	// 这里是一个示例实现，实际逻辑会根据具体需求进行编写
 	// result := "Analyzed result for data: " + data
 	// return result
-	fmt.Println()
 }
