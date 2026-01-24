@@ -35,7 +35,8 @@ type RedisConfig struct {
 }
 
 type AIConfig struct {
-	APIKey string `mapstructure:"apikey"`
+	APIKey  string `mapstructure:"apikey"`
+	BaseURL string `mapstructure:"base_url"`
 }
 
 // GlobalConfig 是全局配置变量

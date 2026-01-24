@@ -17,13 +17,13 @@ func NewAnalyzeHandler() *AnalyzeHandler {
 	}
 }
 
-func (h *AnalyzeHandler) Analyze(c *gin.Context) {
+func (h *AnalyzeHandler) Analyze(ctx *gin.Context) {
 	// 获取请求体数据
 	var payload dto.AnalyzePayload
-	if err := c.ShouldBindJSON(&payload); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+	if err := ctx.ShouldBindJSON(&payload); err != nil {
+		ctx.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 	h.service.AnalyzeData(payload) // 调用业务层
-	c.JSON(200, gin.H{"message": "analysis started"})
+	ctx.JSON(200, gin.H{"message": "analysis started"})
 }

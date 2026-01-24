@@ -47,3 +47,8 @@ func InitRedis(ctx context.Context) {
 	}
 
 }
+
+// GetDB 返回初始化后的 gorm DB 实例（可能为 nil，如果尚未调用 InitPostgres）
+func GetDB() *gorm.DB {
+	return db
+}
