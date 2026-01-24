@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"ai-doctor-backend/config"
-	"ai-doctor-backend/internal/handler"
+	"ai-doctor-backend/internal/router"
 	"ai-doctor-backend/pkg/database"
 	clients "ai-doctor-backend/pkg/sdk-clients"
 
@@ -31,11 +31,8 @@ func main() {
 	// 5. 启动 Gin 服务器
 	r := gin.Default()
 
-	analyze := handler.NewAnalyzeHandler()
-
-	// 注册路由
-	api := r.Group("/api_v1")
-	api.POST("/analyzeImage", analyze.Analyze)
+	// 注册路由（集中在 internal/router）
+	router.RegisterAPIRoutes(r)
 
 	r.Run(":8080")
 }
