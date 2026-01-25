@@ -1,10 +1,11 @@
 package service
 
 import (
+	"fmt"
+
 	"ai-doctor-backend/config"
 	"ai-doctor-backend/internal/dto"
 	helpers "ai-doctor-backend/pkg"
-	"fmt"
 )
 
 type AnalyzeService struct {
@@ -17,17 +18,17 @@ func NewAnalyzeService() *AnalyzeService {
 	}
 }
 
-func (s *AnalyzeService) AnalyzeData(payload dto.AnalyzePayload) {
-	imageBytes, err := helpers.Base64ToBytes(string(payload.Data))
+// AnalyzeData 解码并分析传入的数据，返回分析结果或错误
+func (s *AnalyzeService) AnalyzeData(payload dto.AnalyzePayload) (string, error) {
+	imageBytes, err := helpers.Base64ToBytes(payload.Data)
 	if err != nil {
-		// 解析异常则抛出错误
-		panic("Error decoding base64 image: " + err.Error())
+		return "", fmt.Errorf("invalid base64 data: %w", err)
 	}
-	fmt.Printf("Decoded image bytes length: %d\n", len(imageBytes))
-	panic("Error decoding base64 image: ")
 
-	// 使用 s.apiKey 调用 AI 服务进行数据分析的逻辑
-	// 这里是一个示例实现，实际逻辑会根据具体需求进行编写
-	// result := "Analyzed result for data: " + data
-	// return result
+	// 目前示例仅打印长度并返回占位结果，实际应调用 AI 接口完成分析
+	fmt.Printf("Decoded image bytes length: %d\n", len(imageBytes))
+
+	// TODO: 使用 s.apiKey 与 LLM/AI 服务交互获取真实分析结果
+	result := "analysis started"
+	return result, nil
 }

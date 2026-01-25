@@ -27,7 +27,6 @@ func InitPostgres() {
 	db, _ = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	// 自动迁移数据库模式
-	db.AutoMigrate(&model.Todo{})
 	db.AutoMigrate(&model.LLM{})
 
 }

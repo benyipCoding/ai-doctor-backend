@@ -1,7 +1,9 @@
 package middleware
 
 import (
+	"fmt"
 	"log"
+	"reflect"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,6 +12,9 @@ func RecoveryMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
+				t := reflect.TypeOf(err)
+				fmt.Println("Recovered from panic:", t, err)
+
 				// 1. 打日志（一定要）
 				log.Printf(
 					"[PANIC] path=%s method=%s err=%v",

@@ -1,9 +1,8 @@
 package handler
 
 import (
-	"net/http"
-
 	"ai-doctor-backend/internal/dto"
+	"ai-doctor-backend/internal/response"
 	"ai-doctor-backend/internal/service"
 	helpers "ai-doctor-backend/pkg"
 
@@ -25,9 +24,9 @@ func (h *LLMHandler) List(c *gin.Context) {
 	// 调用服务层获取 LLM 列表
 	list, err := h.svc.List(c.Request.Context(), limit, offset)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		response.Handle(c, nil, err)
 		return
 	}
 	// 转换为 DTO 并返回（使用 dto 包提供的映射函数）
-	c.JSON(http.StatusOK, dto.FromModels(list))
+	response.Handle(c, dto.FromModels(list), nil)
 }
