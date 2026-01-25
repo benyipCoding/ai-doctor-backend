@@ -24,6 +24,7 @@ func (h *AnalyzeHandler) Analyze(ctx *gin.Context) {
 		ctx.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	h.service.AnalyzeData(payload) // 调用业务层
+	// 调用业务层进行分析
+	h.service.AnalyzeData(payload)
 	ctx.JSON(200, gin.H{"message": "analysis started"})
 }

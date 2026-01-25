@@ -20,19 +20,14 @@ func NewLLMHandler() *LLMHandler {
 
 // List 返回 llms 列表，支持 ?limit=&offset=
 func (h *LLMHandler) List(c *gin.Context) {
-	// 获取请求里的 limit 和 offset 参数，设置默认值
-	limit := 10
-	offset := 0
-
 	// 使用通用 helper 解析分页参数
-	limit, offset = helpers.ParseLimitOffset(c.Query("limit"), c.Query("offset"), 10)
+	limit, offset := helpers.ParseLimitOffset(c.Query("limit"), c.Query("offset"), 10)
 	// 调用服务层获取 LLM 列表
 	list, err := h.svc.List(c.Request.Context(), limit, offset)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-
 	// 转换为 DTO 并返回（使用 dto 包提供的映射函数）
 	c.JSON(http.StatusOK, dto.FromModels(list))
 }

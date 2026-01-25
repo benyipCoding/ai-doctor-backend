@@ -14,7 +14,7 @@ func Base64ToBytes(b64 string) ([]byte, error) {
 	return base64.StdEncoding.DecodeString(b64)
 }
 
-// ParseLimitOffset 从两个字符串解析 limit 与 offset，返回默认值当解析失败
+// ParseLimitOffsetWithDefault 从两个字符串解析 limit 与 offset，可指定默认的 limit 值
 func ParseLimitOffset(limitStr, offsetStr string, defaultLimit int) (int, int) {
 	limit := defaultLimit
 	offset := 0

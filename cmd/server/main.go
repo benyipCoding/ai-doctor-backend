@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"fmt"
 
 	"ai-doctor-backend/config"
+	"ai-doctor-backend/internal/middleware"
 	"ai-doctor-backend/internal/router"
 	"ai-doctor-backend/pkg/database"
 	clients "ai-doctor-backend/pkg/sdk-clients"
@@ -31,8 +33,12 @@ func main() {
 	// 5. 启动 Gin 服务器
 	r := gin.Default()
 
+	// 6. 注册中间件
+	// 全局异常处理中间件
+	r.Use(middleware.RecoveryMiddleware())
+
 	// 注册路由（集中在 internal/router）
 	router.RegisterAPIRoutes(r)
 
-	r.Run(":8080")
+	r.Run(fmt.Sprintf(":%d", config.GlobalConfig.Server.Port))
 }
