@@ -1,8 +1,8 @@
-package analyzeImage
+package prompt
 
 import "fmt"
 
-func generatePrompt(explanationStyle string) string {
+func GeneratePrompt(explanationStyle string) string {
 	var styleInstruction string
 	if explanationStyle == "professional" {
 		styleInstruction = "请使用严谨、专业的医学术语进行解读。重点分析病理生理机制、临床意义及鉴别诊断。语言风格应客观、学术，适合具备一定医学背景的人群阅读。"
