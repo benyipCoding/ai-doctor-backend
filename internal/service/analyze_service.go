@@ -25,6 +25,10 @@ func (s *AnalyzeService) AnalyzeData(payload dto.AnalyzePayload) (string, error)
 		return "", fmt.Errorf("invalid base64 data: %w", err)
 	}
 
+	// 模拟panic情况
+	var a []int
+	fmt.Println(a[1]) // 访问越界，触发 panic
+
 	// 目前示例仅打印长度并返回占位结果，实际应调用 AI 接口完成分析
 	fmt.Printf("Decoded image bytes length: %d\n", len(imageBytes))
 

@@ -1,9 +1,8 @@
 package response
 
 import (
-	"net/http"
-
 	"ai-doctor-backend/internal/errors"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,8 +10,9 @@ import (
 func Handle(c *gin.Context, data any, err error) {
 	if err == nil {
 		c.JSON(http.StatusOK, gin.H{
-			"code": "OK",
-			"data": data,
+			"code":    "2000",
+			"data":    data,
+			"message": "success",
 		})
 		return
 	}

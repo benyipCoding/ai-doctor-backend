@@ -1,26 +1,23 @@
 package middleware
 
 import (
-	"fmt"
-	"log"
-	"reflect"
-
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
-func RecoveryMiddleware() gin.HandlerFunc {
+func RecoveryMiddleware(logger *zap.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
-				t := reflect.TypeOf(err)
-				fmt.Println("Recovered from panic:", t, err)
+				traceID := c.GetString("trace_id")
 
 				// 1. 打日志（一定要）
-				log.Printf(
-					"[PANIC] path=%s method=%s err=%v",
-					c.Request.URL.Path,
-					c.Request.Method,
-					err,
+				logger.Error("panic recovered",
+					zap.Any("err", err),
+					zap.String("path", c.Request.URL.Path),
+					zap.String("method", c.Request.Method),
+					zap.String("trace_id", traceID),
+					zap.Stack("stack"),
 				)
 
 				// 2. 返回统一 JSON

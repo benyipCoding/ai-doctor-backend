@@ -9,6 +9,6 @@ func (e *BizError) Error() string {
 	return e.Message
 }
 
-func New(code, msg string) *BizError {
+func NewBizErr(code, msg string) *BizError {
 	return &BizError{Code: code, Message: msg}
 }

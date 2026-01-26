@@ -8,6 +8,7 @@ import (
 	"ai-doctor-backend/internal/middleware"
 	"ai-doctor-backend/internal/router"
 	"ai-doctor-backend/pkg/database"
+	"ai-doctor-backend/pkg/logger"
 	clients "ai-doctor-backend/pkg/sdk-clients"
 
 	"github.com/gin-gonic/gin"
@@ -35,7 +36,14 @@ func main() {
 
 	// 6. 注册中间件
 	// 全局异常处理中间件
-	r.Use(middleware.RecoveryMiddleware())
+	log := logger.New()
+	defer log.Sync()
+
+	r.Use(
+		middleware.TraceMiddleware(),
+		middleware.LoggerMiddleware(log),
+		middleware.RecoveryMiddleware(log),
+	)
 
 	// 注册路由（集中在 internal/router）
 	router.RegisterAPIRoutes(r)
